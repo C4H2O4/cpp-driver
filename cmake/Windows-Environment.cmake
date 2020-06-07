@@ -56,10 +56,12 @@ if(MSVC_VERSION)
        $ENV{VISUAL_STUDIO_INTERNAL_VERSION} EQUAL 110)
       # Attempt to handle express/community editions (VS 2010/2012) on AppVeyor
       set(CMAKE_VS_DEVENV_COMMAND "$ENV{ProgramFiles}/Microsoft Visual Studio ${VS_TOOLSET_VERSION}/Common7/IDE/devenv.exe")
-    elsif(VS_INTERNAL_VERSION EQUAL 142) # Visual Studio 2019 Professional
-      set(CMAKE_VS_DEVENV_COMMAND "$ENV{ProgramFiles}/Microsoft Visual Studio/2019/Professional/Common7/IDE/devenv.exe")
-    endif()
   endif()
+
+  if(VS_INTERNAL_VERSION EQUAL 142) # Visual Studio 2019 Professional
+    set(CMAKE_VS_DEVENV_COMMAND "$ENV{ProgramFiles}/Microsoft Visual Studio/2019/Professional/Common7/IDE/devenv.exe")
+  endif()
+
   get_filename_component(DEVENV_DIR ${CMAKE_VS_DEVENV_COMMAND} DIRECTORY)
   get_filename_component(VS_VC_DIR ${DEVENV_DIR}/../../VC ABSOLUTE)
   get_filename_component(VS_TOOLS_DIR ${DEVENV_DIR}/../../Common7/Tools ABSOLUTE)
