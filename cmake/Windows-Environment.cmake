@@ -34,7 +34,7 @@ if(MSVC_VERSION)
   if(CMAKE_VS_PLATFORM_TOOLSET)
     string(REPLACE "v" "" VS_INTERNAL_VERSION ${CMAKE_VS_PLATFORM_TOOLSET})
   elseif(MSVC_TOOLSET_VERSION)
-    string(REPLACE "v" "" VS_INTERNAL_VERSION ${MSVC_TOOLSET_VERSION})
+    set(VS_INTERNAL_VERSION ${MSVC_TOOLSET_VERSION})
   endif()
   if(DEFINED ENV{APPVEYOR} AND DEFINED ENV{VISUAL_STUDIO_INTERNAL_VERSION})
     if (CMAKE_CL_64 AND
@@ -56,6 +56,8 @@ if(MSVC_VERSION)
        $ENV{VISUAL_STUDIO_INTERNAL_VERSION} EQUAL 110)
       # Attempt to handle express/community editions (VS 2010/2012) on AppVeyor
       set(CMAKE_VS_DEVENV_COMMAND "$ENV{ProgramFiles}/Microsoft Visual Studio ${VS_TOOLSET_VERSION}/Common7/IDE/devenv.exe")
+    elsif(VS_INTERNAL_VERSION EQUAL 142) # Visual Studio 2019 Professional
+      set(CMAKE_VS_DEVENV_COMMAND "$ENV{ProgramFiles}/Microsoft Visual Studio/2019/Professional/Common7/IDE/devenv.exe")
     endif()
   endif()
   get_filename_component(DEVENV_DIR ${CMAKE_VS_DEVENV_COMMAND} DIRECTORY)
